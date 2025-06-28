@@ -1,0 +1,7 @@
+com\gautama\cabinbookingbackend\api\controller\CabinController.class
+com\gautama\cabinbookingbackend\CabinBookingBackendApplication.class
+com\gautama\cabinbookingbackend\api\enums\Role.class
+com\gautama\cabinbookingbackend\core\model\Cabin.class
+com\gautama\cabinbookingbackend\api\config\SecurityConfig.class
+com\gautama\cabinbookingbackend\core\repository\CabinRepository.class
+com\gautama\cabinbookingbackend\core\service\CabinService.class
