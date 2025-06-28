@@ -7,6 +7,7 @@ import com.gautama.cabinbookingbackend.api.enums.BookingStatus;
 import com.gautama.cabinbookingbackend.core.model.Booking;
 import com.gautama.cabinbookingbackend.core.model.Cabin;
 import com.gautama.cabinbookingbackend.core.model.User;
+import com.gautama.cabinbookingbackend.core.repository.UserRepository;
 import com.gautama.cabinbookingbackend.core.service.BookingService;
 import com.gautama.cabinbookingbackend.core.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,11 +26,24 @@ public class BookingController {
 
     private final BookingService bookingService;
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
 
     @PostMapping
-    public ResponseEntity<Booking> createBooking(@RequestBody BookingRequestDto request) {
-        Booking booking = bookingService.createBooking(request);
+    public ResponseEntity<Booking> createBooking(@RequestBody BookingRequestDto bookingRequestDto, HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new BadCredentialsException("Токен отсутствует или не верен");
+        }
+
+        String token = authHeader.substring(7);
+        String username = jwtUtil.extractUsername(token);
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new BadCredentialsException("Пользователь не найден"));
+
+        Booking booking = bookingService.createBooking(bookingRequestDto, user);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
     }
 
@@ -68,19 +82,7 @@ public class BookingController {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new BadCredentialsException("Пользователь не найден"));
 
-        List<Booking> bookings = bookingService.getBookingsByUser(user);
-
-        List<BookingDto> bookingDtos = bookings.stream().map(booking -> {
-            Cabin cabin = booking.getCabin();
-            return new BookingDto(
-                    cabin.getId(),
-                    cabin.getName(),
-                    booking.getStartDate(),
-                    booking.getEndDate(),
-                    booking.getStatus()
-            );
-        }).toList();
-
+        List<BookingDto> bookingDtos = bookingService.getBookingDtosByUser(user);
         return ResponseEntity.ok(bookingDtos);
     }
 }

@@ -18,6 +18,8 @@ public class Booking {
     private Long userId;
     private Long cabinId;
 
+    private String cabinName;
+
     private LocalDate startDate;
     private LocalDate endDate;
 

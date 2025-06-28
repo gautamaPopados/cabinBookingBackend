@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.springframework.data.redis.connection.ReactiveStreamCommands.AddStreamRecord.body;
@@ -52,7 +53,7 @@ public class ImageController {
 
     @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) {
-        Image img = imageRepository.findById(id).orElseThrow();
+        Image img = imageRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Image not found"));
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + img.getId() + "\"")

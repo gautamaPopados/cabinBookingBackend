@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findAllByCabinIdAndEndDateAfter(Long cabinId, LocalDate date);
-    List<Booking> findAllByUser(User user);
+    List<Booking> findAllByUserId(Long userId);
 
 }
