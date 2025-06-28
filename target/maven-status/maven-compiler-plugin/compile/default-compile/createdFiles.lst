@@ -19,6 +19,7 @@ com\gautama\cabinbookingbackend\core\exception\EmailAlreadyUsedException.class
 com\gautama\cabinbookingbackend\api\config\PasswordEncoderConfig.class
 com\gautama\cabinbookingbackend\api\config\JwtUtil.class
 com\gautama\cabinbookingbackend\core\model\User.class
+com\gautama\cabinbookingbackend\api\dto\UserProfileDto.class
 com\gautama\cabinbookingbackend\api\dto\UserLoginDto.class
 com\gautama\cabinbookingbackend\core\exception\GlobalExceptionHandler$ErrorResponse.class
 com\gautama\cabinbookingbackend\api\config\SecurityConfig.class

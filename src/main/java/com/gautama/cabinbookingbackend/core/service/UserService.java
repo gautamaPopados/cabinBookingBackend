@@ -2,12 +2,14 @@ package com.gautama.cabinbookingbackend.core.service;
 
 import com.gautama.cabinbookingbackend.api.config.JwtUtil;
 import com.gautama.cabinbookingbackend.api.dto.UserLoginDto;
+import com.gautama.cabinbookingbackend.api.dto.UserProfileDto;
 import com.gautama.cabinbookingbackend.api.dto.UserRegisterDto;
 import com.gautama.cabinbookingbackend.api.dto.UserResultDto;
 import com.gautama.cabinbookingbackend.api.enums.Role;
 import com.gautama.cabinbookingbackend.core.exception.EmailAlreadyUsedException;
 import com.gautama.cabinbookingbackend.core.model.User;
 import com.gautama.cabinbookingbackend.core.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -71,5 +73,25 @@ public class UserService implements UserDetailsService {
         String token = jwtUtil.generateToken(user.getId(), user.getEmail());
 
         return new UserResultDto(token);
+    }
+
+    public UserProfileDto userProfile(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new BadCredentialsException("Токен отсутствует или не верен");
+        }
+
+        String token = authHeader.substring(7);
+        String username = jwtUtil.extractUsername(token);
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new BadCredentialsException("Пользователь не найден"));
+
+        return new UserProfileDto(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone()
+        );
     }
 }
