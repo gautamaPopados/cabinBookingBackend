@@ -45,6 +45,11 @@ public class ImageController {
         return ResponseEntity.ok(imageRepository.findAll().stream().map(Image::getId).toList());
     }
 
+    @GetMapping("/description")
+    public ResponseEntity<List<Long>> getAllDescriptionImagesIds() {
+        return ResponseEntity.ok(imageRepository.findAllDescriptionImageIds());
+    }
+
     @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) {
         Image img = imageRepository.findById(id).orElseThrow();
