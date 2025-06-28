@@ -1,52 +1,38 @@
 package com.gautama.cabinbookingbackend.api.controller;
 
+import com.gautama.cabinbookingbackend.api.dto.CabinCreateDto;
+import com.gautama.cabinbookingbackend.api.dto.CabinDto;
 import com.gautama.cabinbookingbackend.core.model.Cabin;
+import com.gautama.cabinbookingbackend.core.model.Image;
 import com.gautama.cabinbookingbackend.core.service.CabinService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/cabins")
+@RequiredArgsConstructor
 public class CabinController {
 
     private final CabinService cabinService;
 
-    public CabinController(CabinService cabinService) {
-        this.cabinService = cabinService;
-    }
-
     @GetMapping
-    public List<Cabin> getAllCabins() {
+    public List<CabinDto> getAllCabins() {
         return cabinService.getAllCabins();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cabin> getCabinById(@PathVariable Long id) {
+    public ResponseEntity<CabinDto> getCabinById(@PathVariable Long id) {
         return cabinService.getCabinById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Cabin> createCabin(
-            @RequestPart("cabin") Cabin cabin,
-            @RequestPart(value = "image", required = false) MultipartFile image
-    ) throws IOException {
-        if (image != null && !image.isEmpty()) {
-            cabin.setImage(image.getBytes());
-        }
-        return ResponseEntity.status(201).body(cabinService.createCabin(cabin));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Cabin> updateCabin(@PathVariable Long id, @RequestBody Cabin cabin) {
-        return cabinService.updateCabin(id, cabin)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @PostMapping
+    public ResponseEntity<CabinDto> createCabin(@RequestBody CabinCreateDto request) {
+        return ResponseEntity.status(201).body(cabinService.createCabin(request));
     }
 
     @DeleteMapping("/{id}")

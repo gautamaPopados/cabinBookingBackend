@@ -1,42 +1,43 @@
 package com.gautama.cabinbookingbackend.core.service;
 
+import com.gautama.cabinbookingbackend.api.dto.CabinCreateDto;
+import com.gautama.cabinbookingbackend.api.dto.CabinDto;
 import com.gautama.cabinbookingbackend.core.model.Cabin;
+import com.gautama.cabinbookingbackend.core.model.Image;
 import com.gautama.cabinbookingbackend.core.repository.CabinRepository;
+import com.gautama.cabinbookingbackend.core.repository.ImageRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class CabinService {
 
     private final CabinRepository cabinRepository;
+    private final ImageRepository imageRepository;
 
-    public CabinService(CabinRepository cabinRepository) {
-        this.cabinRepository = cabinRepository;
+    public List<CabinDto> getAllCabins() {
+        return cabinRepository.findAll().stream().map(CabinDto::new).toList();
     }
 
-    public List<Cabin> getAllCabins() {
-        return cabinRepository.findAll();
+    public Optional<CabinDto> getCabinById(Long id) {
+        Cabin cabin = cabinRepository.findById(id).orElse(null);
+        return Optional.of(new CabinDto(cabin));
     }
 
-    public Optional<Cabin> getCabinById(Long id) {
-        return cabinRepository.findById(id);
-    }
+    public CabinDto createCabin(CabinCreateDto request) {
+        Cabin cabin = new Cabin();
+        cabin.setName(request.getName());
+        cabin.setDescription(request.getDescription());
+        cabin.setPrice(request.getPrice());
+        cabin.setMainImageId(request.getMainImageId());
+        cabin.setAdditionalImageIds(request.getAdditionalImageIds());
 
-    public Cabin createCabin(Cabin cabin) {
-        return cabinRepository.save(cabin);
-    }
-
-    public Optional<Cabin> updateCabin(Long id, Cabin updatedCabin) {
-        return cabinRepository.findById(id).map(cabin -> {
-            cabin.setName(updatedCabin.getName());
-            cabin.setLocation(updatedCabin.getLocation());
-            cabin.setDescription(updatedCabin.getDescription());
-            cabin.setPrice(updatedCabin.getPrice());
-            cabin.setImage(updatedCabin.getImage());
-            return cabinRepository.save(cabin);
-        });
+        Cabin saved = cabinRepository.save(cabin);
+        return new CabinDto(saved);
     }
 
     public void deleteCabin(Long id) {

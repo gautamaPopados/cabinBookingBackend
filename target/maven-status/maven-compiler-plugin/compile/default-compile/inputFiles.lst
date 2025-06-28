@@ -1,7 +1,12 @@
+C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\dto\CabinCreateDto.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\CabinBookingBackendApplication.java
+C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\model\Image.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\controller\CabinController.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\model\Cabin.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\enums\Role.java
+C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\repository\ImageRepository.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\repository\CabinRepository.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\config\SecurityConfig.java
+C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\controller\ImageController.java
+C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\enums\EntityType.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\service\CabinService.java
