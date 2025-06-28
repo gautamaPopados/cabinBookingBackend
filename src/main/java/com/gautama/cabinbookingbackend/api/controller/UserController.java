@@ -1,10 +1,7 @@
 package com.gautama.cabinbookingbackend.api.controller;
 
 import com.gautama.cabinbookingbackend.api.config.JwtUtil;
-import com.gautama.cabinbookingbackend.api.dto.TokenRequestDto;
-import com.gautama.cabinbookingbackend.api.dto.UserLoginDto;
-import com.gautama.cabinbookingbackend.api.dto.UserRegisterDto;
-import com.gautama.cabinbookingbackend.api.dto.UserResultDto;
+import com.gautama.cabinbookingbackend.api.dto.*;
 import com.gautama.cabinbookingbackend.core.service.AuthService;
 import com.gautama.cabinbookingbackend.core.service.RevokedTokenRedisService;
 import com.gautama.cabinbookingbackend.core.service.UserService;
@@ -44,7 +41,14 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         authService.logout(request);
-        return ResponseEntity.ok("User logged out successfully");
+        return ResponseEntity.ok("Вы успешно вышли!");
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserProfileDto> profile(HttpServletRequest request) {
+        UserProfileDto userDto = userService.userProfile(request);
+
+        return ResponseEntity.ok(userDto);
     }
 }
 

@@ -3,7 +3,7 @@ package com.gautama.cabinbookingbackend.api.config;
 import com.gautama.cabinbookingbackend.core.service.CabinService;
 import com.gautama.cabinbookingbackend.api.filter.JwtAuthenticationFilter;
 import com.gautama.cabinbookingbackend.core.service.UserService;
-import lombok.RequiredArgsConstructor;
+import com.gautama.cabinbookingbackend.api.enums.Role;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +24,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+
 
 import java.util.List;
 
@@ -60,7 +61,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/logout").authenticated()
+                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/profile").hasAuthority(Role.USER.toString())
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
