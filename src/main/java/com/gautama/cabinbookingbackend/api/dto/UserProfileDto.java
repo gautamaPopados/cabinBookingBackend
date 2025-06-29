@@ -1,5 +1,6 @@
 package com.gautama.cabinbookingbackend.api.dto;
 
+import com.gautama.cabinbookingbackend.api.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,4 +16,6 @@ public class UserProfileDto {
     private String email;
 
     private String phone;
+
+    private Role role;
 }

@@ -91,7 +91,8 @@ public class UserService implements UserDetailsService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPhone()
+                user.getPhone(),
+                user.getRole()
         );
     }
 }

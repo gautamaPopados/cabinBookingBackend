@@ -12,8 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 public class CabinCreateDto {
     private String name;
-    private String description;
+    private Integer numberOfBeds;
+    private Integer area;
     private BigDecimal price;
+    private String description;
     private Long mainImageId;
     private List<Long> additionalImageIds;
 }

@@ -1,5 +1,6 @@
 package com.gautama.cabinbookingbackend.api.controller;
 
+import com.gautama.cabinbookingbackend.api.dto.ImageDto;
 import com.gautama.cabinbookingbackend.core.model.Cabin;
 import com.gautama.cabinbookingbackend.core.model.Image;
 import com.gautama.cabinbookingbackend.core.repository.CabinRepository;
@@ -30,25 +31,27 @@ public class ImageController {
     private final CabinRepository cabinRepository;
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<Image> uploadImage(
+    public ResponseEntity<ImageDto> uploadImage(
             @RequestParam("file") MultipartFile file,
-            @RequestParam(value = "isDescription", defaultValue = "false") boolean isDescription
+            @RequestParam(value = "isDescription", defaultValue = "false") boolean isDescription,
+            @RequestParam String name
     ) throws IOException {
         Image image = new Image();
         image.setData(file.getBytes());
         image.setDescription(isDescription);
-
-        return ResponseEntity.ok(imageRepository.save(image));
+        image.setName(name);
+        Image savedImage = imageRepository.save(image);
+        return ResponseEntity.ok(new ImageDto(image));
     }
 
     @GetMapping
-    public ResponseEntity<List<Long>> getAllImagesIds() {
-        return ResponseEntity.ok(imageRepository.findAll().stream().map(Image::getId).toList());
+    public ResponseEntity<List<ImageDto>> getAllImagesIds() {
+        return ResponseEntity.ok(imageRepository.findAll().stream().map(ImageDto::new).toList());
     }
 
     @GetMapping("/description")
-    public ResponseEntity<List<Long>> getAllDescriptionImagesIds() {
-        return ResponseEntity.ok(imageRepository.findAllDescriptionImageIds());
+    public ResponseEntity<List<ImageDto>> getAllDescriptionImagesIds() {
+        return ResponseEntity.ok(imageRepository.findAllByIsDescriptionTrue());
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)

@@ -32,6 +32,8 @@ public class CabinService {
         Cabin cabin = new Cabin();
         cabin.setName(request.getName());
         cabin.setDescription(request.getDescription());
+        cabin.setNumberOfBeds(request.getNumberOfBeds());
+        cabin.setArea(request.getArea());
         cabin.setPrice(request.getPrice());
         cabin.setMainImageId(request.getMainImageId());
         cabin.setAdditionalImageIds(request.getAdditionalImageIds());

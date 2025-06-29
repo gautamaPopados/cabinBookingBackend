@@ -16,8 +16,10 @@ import java.util.List;
 public class CabinDto {
     private Long id;
     private String name;
-    private String description;
+    private Integer numberOfBeds;
+    private Integer area;
     private BigDecimal price;
+    private String description;
     private Long mainImageId;
     private List<Long> additionalImageIds;
 
@@ -25,6 +27,8 @@ public class CabinDto {
 
         this.id = cabin.getId();
         this.name = cabin.getName();
+        this.numberOfBeds = cabin.getNumberOfBeds();
+        this.area = cabin.getArea();
         this.description = cabin.getDescription();
         this.price = cabin.getPrice();
         this.mainImageId = cabin.getMainImageId();

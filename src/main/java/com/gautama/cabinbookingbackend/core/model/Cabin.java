@@ -21,8 +21,10 @@ public class Cabin {
     private Long id;
 
     private String name;
-    private String description;
+    private Integer numberOfBeds;
+    private Integer area;
     private BigDecimal price;
+    private String description;
 
     private Long mainImageId;
 
