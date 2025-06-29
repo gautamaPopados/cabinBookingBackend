@@ -62,7 +62,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/auth/profile").hasAuthority(Role.USER.toString())
+                        .requestMatchers(HttpMethod.GET, "/auth/profile").hasAnyAuthority(Role.USER.toString(), Role.ADMIN.toString())
+                        .requestMatchers(HttpMethod.POST, "/auth/profile").hasAnyAuthority(Role.USER.toString(), Role.ADMIN.toString())
                         .requestMatchers(HttpMethod.POST, "/bookings").hasAnyAuthority(Role.USER.toString(), Role.ADMIN.toString())
                         .requestMatchers(HttpMethod.POST, "/bookings/{id}/approve", "bookings/{id}/reject").hasAuthority(Role.ADMIN.toString())
                         .requestMatchers(HttpMethod.GET, "/bookings/my-bookings").hasAnyAuthority(Role.USER.toString(), Role.ADMIN.toString())

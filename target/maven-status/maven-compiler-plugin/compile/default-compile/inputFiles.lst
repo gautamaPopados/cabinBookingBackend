@@ -8,6 +8,7 @@ C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinb
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\filter\JwtAuthenticationFilter.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\dto\CabinCreateDto.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\service\AuthService.java
+C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\dto\UserEditDto.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\api\dto\UserProfileDto.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\repository\BookingRepository.java
 C:\Users\egorn\IdeaProjects\cabinBookingBackend\src\main\java\com\gautama\cabinbookingbackend\core\service\BookingService.java

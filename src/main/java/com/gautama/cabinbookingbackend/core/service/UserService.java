@@ -1,10 +1,7 @@
 package com.gautama.cabinbookingbackend.core.service;
 
 import com.gautama.cabinbookingbackend.api.config.JwtUtil;
-import com.gautama.cabinbookingbackend.api.dto.UserLoginDto;
-import com.gautama.cabinbookingbackend.api.dto.UserProfileDto;
-import com.gautama.cabinbookingbackend.api.dto.UserRegisterDto;
-import com.gautama.cabinbookingbackend.api.dto.UserResultDto;
+import com.gautama.cabinbookingbackend.api.dto.*;
 import com.gautama.cabinbookingbackend.api.enums.Role;
 import com.gautama.cabinbookingbackend.core.exception.EmailAlreadyUsedException;
 import com.gautama.cabinbookingbackend.core.model.User;
@@ -18,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -86,6 +85,33 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new BadCredentialsException("Пользователь не найден"));
+
+        return new UserProfileDto(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getRole()
+        );
+    }
+
+    public UserProfileDto updateUserProfile(HttpServletRequest request, UserEditDto updateDto) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new BadCredentialsException("Токен отсутствует или не верен");
+        }
+
+        String token = authHeader.substring(7);
+        String username = jwtUtil.extractUsername(token);
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
+
+        user.setFirstName(updateDto.getFirstName());
+        user.setLastName(updateDto.getLastName());
+        user.setPhone(updateDto.getPhone());
+
+        userRepository.save(user);
 
         return new UserProfileDto(
                 user.getFirstName(),

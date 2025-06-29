@@ -26,7 +26,7 @@ public class CabinController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CabinDto> getCabinById(@PathVariable Long id) {
+    public ResponseEntity<CabinDto> getCabinById(@PathVariable("id") Long id) {
         return cabinService.getCabinById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow( ()-> new NoSuchElementException("Cabin with id " + id + " not found"));
@@ -38,7 +38,7 @@ public class CabinController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCabin(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCabin(@PathVariable("id") Long id) {
         cabinService.deleteCabin(id);
         return ResponseEntity.noContent().build();
     }

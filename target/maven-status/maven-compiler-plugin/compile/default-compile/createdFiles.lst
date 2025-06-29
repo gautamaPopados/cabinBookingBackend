@@ -1,4 +1,5 @@
 com\gautama\cabinbookingbackend\api\controller\CabinController.class
+com\gautama\cabinbookingbackend\api\dto\UserEditDto.class
 com\gautama\cabinbookingbackend\api\enums\Role.class
 com\gautama\cabinbookingbackend\core\service\UserService.class
 com\gautama\cabinbookingbackend\core\model\Cabin.class

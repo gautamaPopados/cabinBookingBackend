@@ -23,10 +23,10 @@ public class BookingService {
     private final BookingRepository bookingRepository;
 
     public Booking createBooking(BookingRequestDto dto, User user) {
-        Cabin cabin = cabinRepository.findById(dto.getCabinId()).orElseThrow(() -> new NoSuchElementException("No such cabin"));
+        Cabin cabin = cabinRepository.findById(dto.getId()).orElseThrow(() -> new NoSuchElementException("No such cabin"));
 
         Booking booking = new Booking();
-        booking.setCabinId(dto.getCabinId());
+        booking.setCabinId(dto.getId());
         booking.setStartDate(dto.getStartDate());
         booking.setEndDate(dto.getEndDate());
         booking.setUserId(user.getId());

@@ -53,20 +53,20 @@ public class BookingController {
     }
 
     @PostMapping("/{id}/approve")
-    public ResponseEntity<Void> approveBooking(@PathVariable Long id) {
+    public ResponseEntity<Void> approveBooking(@PathVariable("id") Long id) {
         bookingService.updateStatus(id, BookingStatus.APPROVED);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/reject")
-    public ResponseEntity<Void> rejectBooking(@PathVariable Long id) {
+    public ResponseEntity<Void> rejectBooking(@PathVariable("id") Long id) {
         bookingService.updateStatus(id, BookingStatus.REJECTED);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/cabin/{cabinId}")
-    public ResponseEntity<List<Booking>> getBookingsByCabin(@PathVariable Long cabinId) {
-        return ResponseEntity.ok(bookingService.getBookingsByCabinId(cabinId));
+    @GetMapping("/cabin/{id}")
+    public ResponseEntity<List<Booking>> getBookingsByCabin(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(bookingService.getBookingsByCabinId(id));
     }
 
     @GetMapping("/my-bookings")

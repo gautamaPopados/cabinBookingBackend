@@ -50,5 +50,14 @@ public class UserController {
 
         return ResponseEntity.ok(userDto);
     }
+
+    @PutMapping("/profile")
+    public ResponseEntity<UserProfileDto> updateProfile(
+            HttpServletRequest request,
+            @RequestBody UserEditDto updateDto
+    ) {
+        UserProfileDto updatedProfile = userService.updateUserProfile(request, updateDto);
+        return ResponseEntity.ok(updatedProfile);
+    }
 }
 
