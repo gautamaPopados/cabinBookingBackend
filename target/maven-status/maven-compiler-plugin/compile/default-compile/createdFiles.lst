@@ -10,6 +10,7 @@ com\gautama\cabinbookingbackend\api\config\SwaggerConfig.class
 com\gautama\cabinbookingbackend\api\dto\CabinCreateDto.class
 com\gautama\cabinbookingbackend\core\model\Image.class
 com\gautama\cabinbookingbackend\api\controller\BookingController.class
+com\gautama\cabinbookingbackend\api\dto\SuperBookingResultDto.class
 com\gautama\cabinbookingbackend\api\dto\UserRegisterDto.class
 com\gautama\cabinbookingbackend\api\dto\UserResultDto.class
 com\gautama\cabinbookingbackend\core\service\AuthService.class

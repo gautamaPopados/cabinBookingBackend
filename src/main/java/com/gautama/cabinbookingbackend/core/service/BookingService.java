@@ -2,6 +2,7 @@ package com.gautama.cabinbookingbackend.core.service;
 
 import com.gautama.cabinbookingbackend.api.dto.BookingDto;
 import com.gautama.cabinbookingbackend.api.dto.BookingRequestDto;
+import com.gautama.cabinbookingbackend.api.dto.SuperBookingResultDto;
 import com.gautama.cabinbookingbackend.api.enums.BookingStatus;
 import com.gautama.cabinbookingbackend.api.enums.Role;
 import com.gautama.cabinbookingbackend.core.model.Booking;
@@ -9,6 +10,7 @@ import com.gautama.cabinbookingbackend.core.model.Cabin;
 import com.gautama.cabinbookingbackend.core.model.User;
 import com.gautama.cabinbookingbackend.core.repository.BookingRepository;
 import com.gautama.cabinbookingbackend.core.repository.CabinRepository;
+import com.gautama.cabinbookingbackend.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class BookingService {
     private final CabinRepository cabinRepository;
+    private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
 
     public Booking createBooking(BookingRequestDto dto, User user) {
@@ -35,8 +38,28 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
+    public List<SuperBookingResultDto> getAllBookings() {
+        List<Booking> bookings = bookingRepository.findAll();
+
+        return bookings.stream().map(booking -> {
+            User user = userRepository.findById(booking.getUserId())
+                    .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+            return new SuperBookingResultDto(
+                    booking.getId(),
+                    booking.getUserId(),
+                    booking.getCabinId(),
+                    booking.getCabinName(),
+                    booking.getStartDate(),
+                    booking.getEndDate(),
+                    booking.getStatus(),
+                    booking.getCreatedAt(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    user.getPhone()
+            );
+        }).toList();
     }
 
     public void updateStatus(Long id, BookingStatus status) {

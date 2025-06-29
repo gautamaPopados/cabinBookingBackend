@@ -3,6 +3,7 @@ package com.gautama.cabinbookingbackend.api.controller;
 import com.gautama.cabinbookingbackend.api.config.JwtUtil;
 import com.gautama.cabinbookingbackend.api.dto.BookingDto;
 import com.gautama.cabinbookingbackend.api.dto.BookingRequestDto;
+import com.gautama.cabinbookingbackend.api.dto.SuperBookingResultDto;
 import com.gautama.cabinbookingbackend.api.enums.BookingStatus;
 import com.gautama.cabinbookingbackend.core.model.Booking;
 import com.gautama.cabinbookingbackend.core.model.Cabin;
@@ -48,7 +49,7 @@ public class BookingController {
     }
 
     @GetMapping("/admin")
-    public List<Booking> getAllBookings() {
+    public List<SuperBookingResultDto> getAllBookings() {
         return bookingService.getAllBookings();
     }
 
